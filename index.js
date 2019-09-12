@@ -35,12 +35,18 @@ const headers = {
 	"Content-Type": "text/event-stream",
 	"Cache-Control": "no-cache"
 }
+function addCallback(callback, text) {
+	if (!callback) {
+	  return text;
+	}
+	return callback + "( " + text + " );";
+};
 function fail(response, key) {  
 	response.writeHead(403, headers);
 	const txt = JSON.stringify({
 		msg: "Invalid request: " + key
 	})
-	response.end(txt);
+	response.end(addCallback(u.query.callback, txt));
 }
 
 if (!fs.existsSync(config.data_file)) { 
@@ -105,7 +111,7 @@ const server = https.createServer(ssl_options, (request, response) => {
 					const txt = JSON.stringify({
 						msg: msg
 					})
-					response.end(txt);
+					response.end(addCallback(u.query.callback, txt));
 					log.warn(msg);
 				} else {
 					response.writeHead(200, headers);
@@ -114,7 +120,7 @@ const server = https.createServer(ssl_options, (request, response) => {
 						msg: msg,
 						ok: true
 					})
-					response.end(txt);
+					response.end(addCallback(u.query.callback, txt));
 					log.info(msg);
 				}
 			});
