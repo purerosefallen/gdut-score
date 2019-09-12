@@ -30,9 +30,13 @@ function output() {
 	}
 	return ret;
 }
-
+const headers = {
+	"Access-Control-Allow-origin": "*",
+	"Content-Type": "text/event-stream",
+	"Cache-Control": "no-cache"
+}
 function fail(response, key) {  
-	response.writeHead(403);
+	response.writeHead(403, headers);
 	response.end("Invalid request: " + key);
 }
 
@@ -93,12 +97,12 @@ const server = https.createServer(ssl_options, (request, response) => {
 			data.info[id] = student;
 			fs.writeFile(config.data_file, JSON.stringify(data, null, 2), (err) => {
 				if (err) {
-					response.writeHead(400);
+					response.writeHead(400, headers);
 					const msg = "Write error: " + err.message;
 					response.end(msg);
 					log.warn(msg);
 				} else {
-					response.writeHead(200);
+					response.writeHead(200, headers);
 					const msg = "Success: " + id;
 					response.end("OK");
 					log.info(msg);
@@ -107,7 +111,7 @@ const server = https.createServer(ssl_options, (request, response) => {
 			break;
 		}
 		default: { 
-			response.writeHead(404);
+			response.writeHead(404, headers);
 			response.end("Not found.");
 			return;
 		}
