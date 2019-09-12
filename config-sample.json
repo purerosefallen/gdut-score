@@ -1,0 +1,9 @@
+{
+	"port": 1428,
+	"ssl": {
+		"cert": "ssl/fullchain.pem",
+		"key": "ssl/privkey.pem"
+	},
+	"password": "123456",
+	"data_file": "./data/data.json"
+}

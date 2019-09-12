@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>广工应数 2 班综测成绩提交</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+<header class="container">
+    <h1 class="title">广工应数 2 班综测成绩提交</h1>
+</header>
+<div class="container">
+    <div class="row grid">
+        <div class="col-lg-6">
+            <input type="text" class="form-control" id="id" value="" placeholder="学号">
+        </div>
+        <div class="col-lg-6">
+            <input type="text" class="form-control" id="name" value="" placeholder="姓名">
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row grid">
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="morals" value="" placeholder="品德表现评价">
+        </div>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="fail_count" value="" placeholder="不及格科目数">
+		</div>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="morals" value="" placeholder="平均绩点">
+        </div>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="score" value="" placeholder="学业成绩">
+        </div>
+	</div>
+</div>
+<div class="container">
+    <div class="row grid">
+        <div class="col-lg-4">
+            <input type="text" class="form-control" id="creative" value="" placeholder="创新实践评价">
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" id="social" value="" placeholder="社会实践评价">
+		</div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" id="arts" value="" placeholder="文体实践评价">
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row button">
+        <div class="col-lg-1">
+            <button class="btn btn-default" id="submit">提交</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist//jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script>
+var ip, port, password;
+
+$(function(){
+	$("body").tooltip({selector: "[data-toggle='tooltip']", trigger: "hover"});
+    $("#submit").click(submit);
+});
+
+function parseQueryString() {
+    //http://stackoverflow.com/questions/523266/how-can-i-get-a-specific-parameter-from-location-search
+    var str = window.location.search;
+    var objURL = {};
+    str.replace(
+        new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+        function( $0, $1, $2, $3 ){
+            objURL[ $1 ] = $3;
+        }
+    );
+    return objURL;
+}
+
+function submit() {
+	$("submit").removeClass("btn-success");
+    id=$("#id").val();
+	name=$("#name").val();
+    morals=$("#morals").val();
+	fail_count=$("#fail_count").val();
+	points=$("#points").val();
+	score=$("#score").val();
+	creative=$("#creative").val();
+	social=$("#social").val();
+	arts=$("#arts").val();
+    var es = new EventSource("https://gdutys2.momobako.com:1428/api/submit?id="+id+"&name="+encodeURIComponent(name)+"&morals="+morals+"&fail_count="+fail_count+"&points="+points+"&score="+score+"&creative="+creative+"&social="+social+"&arts="+arts);
+    es.onmessage = function(e) {
+        if (e.data=="OK") {
+            $("submit").addClass("btn-success");
+        }
+    };
+    es.onerror = function(e) {
+        es.close();
+    };
+}
+
+</script>
+
+<script src="http://s4.cnzz.com/z_stat.php?id=1255875151&web_id=1255875151"></script>
+</body>
+</html>

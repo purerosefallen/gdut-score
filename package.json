@@ -1,0 +1,26 @@
+{
+  "name": "gdut-score",
+  "version": "1.0.0",
+  "description": "GDUT final score submit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/purerosefallen/gdut-score.git"
+  },
+  "author": "Nanahira",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/purerosefallen/gdut-score/issues"
+  },
+  "homepage": "https://github.com/purerosefallen/gdut-score#readme",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "load-json-file": "^6.2.0",
+    "url": "^0.11.0"
+  }
+}
