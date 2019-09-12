@@ -37,7 +37,10 @@ const headers = {
 }
 function fail(response, key) {  
 	response.writeHead(403, headers);
-	response.end("Invalid request: " + key);
+	const txt = JSON.stringify({
+		msg: "Invalid request: " + key
+	})
+	response.end(txt);
 }
 
 if (!fs.existsSync(config.data_file)) { 
@@ -99,12 +102,19 @@ const server = https.createServer(ssl_options, (request, response) => {
 				if (err) {
 					response.writeHead(400, headers);
 					const msg = "Write error: " + err.message;
-					response.end(msg);
+					const txt = JSON.stringify({
+						msg: msg
+					})
+					response.end(txt);
 					log.warn(msg);
 				} else {
 					response.writeHead(200, headers);
 					const msg = "Success: " + id;
-					response.end("OK");
+					const txt = JSON.stringify({
+						msg: msg,
+						ok: true
+					})
+					response.end(txt);
 					log.info(msg);
 				}
 			});
