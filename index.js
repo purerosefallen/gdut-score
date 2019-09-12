@@ -32,7 +32,7 @@ function output() {
 }
 const headers = {
 	"Access-Control-Allow-origin": "*",
-	//"Content-Type": "text/event-stream",
+	"Content-Type": "application/json",
 	"Cache-Control": "no-cache"
 }
 function addCallback(callback, text) {
